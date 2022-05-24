@@ -1,7 +1,7 @@
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
       <div class="sidebar-brand-icon">
-        <img src="img/logo/logo2.png">
+        <img src="{{asset('img/logo/logo2.png')}}">
       </div>
       <div class="sidebar-brand-text mx-3">SM Store</div>
     </a>
@@ -88,7 +88,13 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="charts.html">
+      <a class="nav-link" href="{{route('category.index')}}">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Category</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('item.index')}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Items</span>
       </a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        return view('category.index');
+        $categories = Category::all();
+        return view('category.index', compact('categories'));
     }
 
     /**
@@ -38,6 +40,20 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        DB::beginTransaction();
+
+        $category = new Category();
+        $category->fill($request->all());
+
+        try {
+            $category->save();
+            DB::commit();
+            return response()->json(['message'=>'Category Created !', 'url'=> route('category.index')]);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return response()->json(['message'=>$ex->getMessage(),'code'=>422]);
+        }
+
     }
 
     /**
@@ -46,9 +62,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
         //
+        $category = Category::findOrFail($id);
+        return response()->json($category);
     }
 
     /**
@@ -57,9 +75,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
         //
+        $category = Category::findOrFail($id);
+        return view('category.create', compact('category'));
     }
 
     /**
@@ -69,9 +89,23 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         //
+        DB::beginTransaction();
+        $category = Category::findOrFail($id);
+
+        $category->fill($request->all());
+
+        try {
+            $category->save();
+            DB::commit();
+            return response()->json(['message'=>'Category Updated !', 'url'=> route('category.index')]);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return response()->json(['message'=>$ex->getMessage(),'code'=>422]);
+        }
+        
     }
 
     /**
@@ -80,8 +114,16 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
+        $category = Category::findOrFail($id);
+
+       try {
+           $category->delete();
+           return response()->json(['message'=>'Category Deleted !', 'url'=> route('category.index')]);
+        } catch (\Exception $ex) {
+            return response()->json(['message'=>$ex->getMessage(),'code'=>422]);
+        }
     }
 }
