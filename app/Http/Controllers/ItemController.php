@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Item;
+use Brick\Math\BigInteger;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -15,7 +18,8 @@ class ItemController extends Controller
     public function index()
     {
         //
-        return view('item.index');
+        $items = Item::all();
+        return view('item.index', compact('items'));
     }
 
     /**
@@ -38,6 +42,42 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         //
+  
+        DB::beginTransaction();
+
+        $item = new Item();
+        $item->name =  $request->name;
+        $item->stock = $request->stock;
+        $item->category_id = $request->category;
+        $item->price = floatval($request->price);
+
+        if($request->hasFile('imageFile')):
+
+            $filename = uniqid('item-' , true). '.' . $request->file('imageFile')->getClientOriginalExtension();
+            $path = public_path('images/items/');
+
+            if(!file_exists($path)):
+
+                mkdir($path , 777,true);
+
+            endif;
+
+            $request->file('imageFile')->move($path , $filename);
+            $item->image = $filename;
+        else:
+            $item->image = null;
+        endif;
+
+        try {
+            $item->save();
+            DB::commit();
+            return response()->json(['message'=>'Item Created !', 'url'=> route('item.index')]);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            dd($ex);
+            return response()->json(['message'=>$ex->getMessage(),'code'=>422]);
+        }
+
     }
 
     /**
@@ -46,9 +86,11 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show($id)
     {
         //
+        $item = Item::with('category')->findOrFail($id);
+        return response()->json($item);
     }
 
     /**
@@ -57,9 +99,11 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit($id)
     {
         //
+        $item = Item::findOrFail($id);
+        return view('item.create', compact('item'));
     }
 
     /**
@@ -80,8 +124,46 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy($id)
     {
         //
+        $item = Item::findOrFail($id);
+
+       try {
+           $item->delete();
+           return response()->json(['message'=>'Item Deleted !', 'url'=> route('item.index')]);
+        } catch (\Exception $ex) {
+            return response()->json(['message'=>$ex->getMessage(),'code'=>422]);
+        }
     }
+
+    /**
+     * Get all categories
+     *
+     * @return Category
+     */
+    public function getAllCategories(Request $request){
+        
+        $name = $request->query('term');
+
+        $category = Category::orderBy('id', 'desc')
+        ->when(!empty($name), function ($q1) use ($name) {
+
+                $q1->where('name','like',"%{$name}%");
+        });
+
+    $result = [];
+
+
+
+    foreach ($category->get() as $val) {
+        $result[] = ['id' => $val->id, 'text' => $val->name];
+
+    }
+    return response()->json(['results' => $result]);
+
+
+    }
+
+ 
 }

@@ -99,6 +99,12 @@
         <span>Items</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('item.index')}}">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Rent Outs</span>
+      </a>
+    </li>
     <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>
   </ul>

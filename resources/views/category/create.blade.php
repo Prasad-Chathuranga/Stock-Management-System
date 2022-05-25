@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label class="font-weight-bold" for="exampleInputPassword1">Current Stock</label>
-                <input type="number" class="form-control" ng-model="category.stock" id="exampleInputPassword1" placeholder="Enter Current Stock">
+                <input type="number" class="form-control allow_numeric_fld" ng-model="category.stock" id="exampleInputPassword1" placeholder="Enter Current Stock">
             </div>
 
            
@@ -53,7 +53,20 @@
 
 @section('script')
 
+    <script type="text/javascript">
+    $(".allow_numeric_fld").on("input", function(evt) {
+
+var self = $(this);
+self.val(self.val().replace(/\D/g, ""));
+
+if ((evt.which < 48 || evt.which > 57)){
+    evt.preventDefault();
+}
+
+});
+    </script>
     <script src="{{ asset('js/angular/category.js') }}"></script>
+    
 
 
 @endsection

@@ -23,25 +23,40 @@
               <th>#</th>
               <th>Name</th>
               <th>Stock</th>
+              <th>Price</th>
+              <th>Image</th>
               <th>Created On</th>
-              <th></th>
+              <th>Action</th>
             </tr>
         </thead>
           <tbody>
-           {{-- @foreach ($categories as $key => $category )
+ @foreach ($items as $key => $item )
                <tr>
                  <td>{{$key+1}}</td>
-                 <td>{{$category->name}}</td>
-                 <td>{{$category->stock}}</td>
-                 <td>{{date('Y-m-d h:i:s A', strtotime($category->created_at))}}</td>
+                 <td>{{$item->name}}</td>
+                 <td>{{$item->stock}}</td>
+                 <td>{{$item->price}}</td>
+                 <td>
+ 
+                    @if(isset($item->image))
+                    <img style="max-height: 50px;  object-fit: cover" src="{{url('images/items/')}}/{{$item->image}}" class="img-fluid" >
+                      <span class="feather icon-chevron-down live-icon"></span>
+                      @else
+                      <img style="max-height: 50px;  object-fit: cover" src="{{url('images/items/')}}/default_image.png" class="img-fluid" >
+                      <span class="feather icon-chevron-down live-icon"></span>
+                    @endif
+                  </td>
+                 
+                  
+                 <td>{{date('Y-m-d h:i:s A', strtotime($item->created_at))}}</td>
                  <td>
      
-                   <a style="cursor: pointer" data-toggle='tooltip' data-placement="right" href='{{route('item.edit',$category->id)}}' title="Edit Item" class="text-info"> <i class="fas fa-fw fa-pen"></i></a>
-                  <a style="cursor: pointer"  data-toggle='tooltip' data-placement="right" ng-click="delete({{$category->id}})" title="Delete Category" class="ml-3 text-danger"> <i class="fas fa-fw fa-trash"></i></a> 
+                   <a style="cursor: pointer" data-toggle='tooltip' data-placement="right" href='{{route('item.edit',$item->id)}}' title="Edit Item" class="text-info"> <i class="fas fa-fw fa-pen"></i></a>
+                  <a style="cursor: pointer"  data-toggle='tooltip' data-placement="right" ng-click="delete({{$item->id}})" title="Delete Category" class="ml-3 text-danger"> <i class="fas fa-fw fa-trash"></i></a> 
          
                 </td>
                </tr>
-           @endforeach --}}
+           @endforeach  
           </tbody>
         </table>
       </div>
@@ -66,7 +81,7 @@
  <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
  <script src="{{ asset('vendor/datatables/dataTables.responsive.min.js') }}" type="text/javascript"></script>
  <script src="{{ asset('vendor/datatables/responsive.bootstrap4.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/angular/category.js') }}"></script>
+<script src="{{ asset('js/angular/item.js') }}"></script>
 
  <!-- Page level custom scripts -->
  <script>
