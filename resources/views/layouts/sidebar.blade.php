@@ -100,7 +100,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{route('item.index')}}">
+      <a class="nav-link" href="{{route('rentout.index')}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Rent Outs</span>
       </a>

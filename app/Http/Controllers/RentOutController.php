@@ -15,6 +15,7 @@ class RentOutController extends Controller
     public function index()
     {
         //
+        return view('rentout.index');
     }
 
     /**
@@ -25,6 +26,7 @@ class RentOutController extends Controller
     public function create()
     {
         //
+        return view('rentout.create');
     }
 
     /**

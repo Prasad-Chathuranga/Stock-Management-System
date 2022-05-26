@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\RentOutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/category', CategoryController::class);
 Route::resource('/item', ItemController::class);
-
+Route::resource('/rentout', RentOutController::class);
 Route::get('/categories', [App\Http\Controllers\ItemController::class, 'getAllCategories'])->name('categories');
+Route::get('/items', [App\Http\Controllers\ItemController::class, 'getAllItems'])->name('items');
+Route::get('/get-item', [App\Http\Controllers\ItemController::class, 'getSingleItem'])->name('get_item');
 
 
 

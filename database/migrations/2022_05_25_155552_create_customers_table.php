@@ -17,8 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('address');
-            $table->string('mobile_1')->nullable();
-            $table->string('mobile_2');
+            $table->string('mobile_1');
+            $table->string('mobile_2')->nullable();;
+            $table->string('email')->nullable();;
             $table->timestamps();
         });
     }

@@ -165,5 +165,56 @@ class ItemController extends Controller
 
     }
 
+    /**
+     * All Items to Select 2
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getAllItems(Request $request){
+    
+        $name = $request->query('term');
+        $category = $request->category_id;
+
+        $item = Item::orderBy('id', 'desc')
+        ->when(!empty($name), function ($q1) use ($name) {
+
+                $q1->where('name','like',"%{$name}%");
+        })
+        ->when(!empty($category), function ($q1) use ($category) {
+
+            $q1->where('category_id',$category);
+    });
+
+    
+    $result = [];
+
+    if(isset($category)):
+
+        foreach ($item->get() as $val) {
+            $result[] = ['id' => $val->id, 'text' => $val->name];
+
+        }
+ 
+    endif;
+
+
+    return response()->json(['results' => $result]);
+
+    }
+
+    /**
+     * get Single Item
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getSingleItem(Request $request){
+       $item_id = $request->item_id;
+       
+       $item = Item::with('category')->findOrFail($item_id);
+
+       return response()->json($item);
+    }
  
 }
