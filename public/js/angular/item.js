@@ -1,9 +1,8 @@
 app.controller('ItemController', ($scope, $http, Loader, $timeout) => {
 
    
-
-    $scope.init = (id) => {
-    
+$scope.init = (id) => {
+     
         $http.get($scope.url + '/' + id)
                 .then((response) => {
 

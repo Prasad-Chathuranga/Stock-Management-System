@@ -3,8 +3,9 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
     let items = [];
     $scope.data = [];
     $scope.items = [];
-
-
+    $scope.payment = [{}];
+    // $scope.odrer = {};
+    // $scope.odrer.advance_payment = "0";
 
     $scope.init = (id) => {
 
@@ -140,7 +141,7 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
                         'discount_type': 0,
                         'discount': 0,
                         'gross_total': data.price - 0,
-                        'actual_total': data.price*1
+                        'actual_total': data.price * 1
                     };
                     items.push(new_item);
                     $scope.items = items;
@@ -158,102 +159,115 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
     }
 
     $scope.calculateDiscount = (item) => {
- 
+
         // console.log(document.getElementById('qty').value);
         let discount = 0;
-        let total = item.price*item.quantity;
+        let total = item.price * item.quantity;
         let subtotal = 0;
         let totalForItems = 0;
         let actual_total = 0;
-        
-       
-        if(item.discount_type=="1"){ //precentage
-            discount = total*(item.discount/100);
 
-        }else if(item.discount_type=="2"){ //fixed
+
+        if (item.discount_type == "1") { //precentage
+            discount = total * (item.discount / 100);
+
+        } else if (item.discount_type == "2") { //fixed
             discount = item.discount;
- 
-        }else{
+
+        } else {
             discount = 0;
 
         }
 
         item.actual_total = total;
         item.discount = discount;
-        item.gross_total = total-discount;
+        item.gross_total = total - discount;
 
         items.forEach((element, index) => {
-            if(element.id === item.id) {
+            if (element.id === item.id) {
                 items[index] = item;
             }
- 
+
         });
 
-      $scope.calculateTotal();
+        $scope.calculateTotal();
     }
 
-    $scope.calculateTotal = () =>{
+    $scope.calculateTotal = () => {
 
-  
+
         let subtotal = 0;
         let totalForItems = 0;
         let total_discount = 0;
         let final_total = 0;
 
         items.forEach((element, index) => {
-            final_total = final_total+element.gross_total;
-            totalForItems = totalForItems + (element.price*element.quantity);
+            final_total = final_total + element.gross_total;
+            totalForItems = totalForItems + (element.price * element.quantity);
             total_discount = total_discount + element.discount;
-   console.log(final_total);
         });
 
-      $scope.data.subtotal = subtotal;
-      $scope.data.totalforitems = totalForItems;
-      $scope.data.total_discount = total_discount;
-      $scope.data.final_total = final_total;
+        $scope.data.subtotal = subtotal;
+        $scope.data.totalforitems = totalForItems;
+        $scope.data.total_discount = total_discount;
+        $scope.data.final_total = final_total;
     }
 
 
     $scope.save = () => {
 
+        // console.log($scope.payment);
 
-        $scope.item.category = document.getElementById('categories').value;
+        // $scope.item.category = document.getElementById('categories').value;
         var url = $scope.url;
 
-        if (typeof (beforeSubmit) == 'function') {
-            beforeSubmit($scope.item);
+        // if (typeof (beforeSubmit) == 'function') {
+        //     beforeSubmit($scope.item);
 
+        // }
+
+        // var formData = new FormData();
+
+        // if ($scope.item.id) {
+        //     url += '/' + $scope.item.id;
+        //     $scope.rentout._method = 'put';
+        //     // formData.append('_method', 'put');
+        // }
+
+
+        // angular.forEach($scope.item, (value, key) => {
+        //     formData.append(key, value);
+        // });
+
+        var amounts = {
+            subtotal : $scope.data.subtotal,
+            totalforitems : $scope.data.totalforitems,
+            total_discount : $scope.data.total_discount,
+            final_total : $scope.data.final_total,
+            due_amount : $scope.data.final_total-$scope.order.amount
         }
 
-        var formData = new FormData();
-
-        if ($scope.item.id) {
-            url += '/' + $scope.item.id;
-            $scope.item._method = 'put';
-            formData.append('_method', 'put');
+        var data = {
+            item : $scope.items,
+            customer : JSON.stringify($scope.customer),
+            amounts :  JSON.stringify(amounts),
+            order :  JSON.stringify($scope.order)
         }
 
 
-        angular.forEach($scope.item, (value, key) => {
-            formData.append(key, value);
-        });
 
+        // if ($scope.image) {
+        //     formData.append('imageFile', $scope.image);
+        // }
 
-        if ($scope.image) {
-            formData.append('imageFile', $scope.image);
-        }
+        // Loader.start();
 
-        Loader.start();
+        
 
-        $http.post(url, formData, {
-                transformRequest: angular.identity,
-                headers: {
-                    'content-type': undefined
-                }
-            })
+        $http.post(url, data)
             .then((response) => {
-
-                Loader.stop();
+                // console.log(response);
+                // Loader.stop();
                 pnotify('Success', response.data.message, 'success');
                 $timeout(() => {
                     window.location = response.data.url;
@@ -261,8 +275,9 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
 
             })
             .catch((error) => {
-                Loader.stop();
                 console.log(error);
+                // Loader.stop();
+                // console.log(error);
                 pnotify('Error', getErrorAsString(error.data), 'error');
             });
 
@@ -311,6 +326,15 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
 
     };
 
+ 
+
+    $scope.checkAmount = (total, amount) =>{
+        if(amount > total){
+            $scope.payment.amount = 0;
+            pnotify('Warning !', 'Amount is higher than total amount', 'error');
+        }
+    }
+
     $scope.removeItems = function (id) { // remove dynamic fieldsto cargo details
 
         items.splice(id, 1);
@@ -318,23 +342,18 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
 
     }
 
-    // $scope.calculateTotal = function () {
-       
-    //     $scope.data.total = 0;
-    //     $scope.data.total_discount = 0;
-    //     $scope.data.gross_total = 0;
-    //     $scope.data.sub_total = 0;
-    //     // $scope.data.handling_fee = 0;
+    $scope.addPayment = () =>{
+        var new_payment = {};
+        $scope.payment.push(new_payment);
 
-    //     items.forEach(element => {
+    }
 
-            
-            
-    //     });
-
-      
-
-    // }
+    $scope.removePayment = function (id) { // remove dynamic fieldsto cargo details
+        if ($scope.payment.length > 1) {
+            $scope.payment.splice(id, 1);
+            // $scope.calculatePaymentTotal();
+        }
+    }
 
     $scope.imageChanged = (el) => {
         $scope.image = el.files[0];
