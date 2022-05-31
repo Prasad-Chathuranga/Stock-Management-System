@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('order_id');
+            $table->string('payment_no');
             $table->string('notes')->nullable()->default('Advance Payment');
             $table->float('amount');
             $table->float('due');

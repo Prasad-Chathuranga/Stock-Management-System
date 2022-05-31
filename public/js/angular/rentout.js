@@ -158,6 +158,29 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
         }
     }
 
+    $scope.getOrderDetails = (id) =>{
+        $http.get($scope.order_details_url, {params:{
+            id : id
+        }})
+            .then((response) => {
+                console.log(response);
+                $scope.data.order_details = response.data;
+               
+                
+                response.data.order.forEach(element => {
+                    $scope.data.order_details.order.created_at = returnSenskaDateTimeString(element.created_at);
+                    $scope.data.order_details.order.order_no = element.order_no;
+                });
+                // console.log(JSON.stringify(response.data.order));
+            })
+            .catch((error) => {
+                console.log(error);
+                // Loader.stop();
+                // pnotify('Error', getErrorAsString(error.data), 'error');
+                // Loader.stop();
+            });
+    }
+
     $scope.calculateDiscount = (item) => {
 
         // console.log(document.getElementById('qty').value);
@@ -249,9 +272,9 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
 
         var data = {
             item : $scope.items,
-            customer : JSON.stringify($scope.customer),
-            amounts :  JSON.stringify(amounts),
-            order :  JSON.stringify($scope.order)
+            customer : $scope.customer,
+            amounts :  amounts,
+            order :  $scope.order
         }
 
 
@@ -266,19 +289,19 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
 
         $http.post(url, data)
             .then((response) => {
-                // console.log(response);
+                console.log(response);
                 // Loader.stop();
-                pnotify('Success', response.data.message, 'success');
-                $timeout(() => {
-                    window.location = response.data.url;
-                }, 2000);
+                // pnotify('Success', response.data.message, 'success');
+                // $timeout(() => {
+                //     window.location = response.data.url;
+                // }, 2000);
 
             })
             .catch((error) => {
                 console.log(error);
                 // Loader.stop();
                 // console.log(error);
-                pnotify('Error', getErrorAsString(error.data), 'error');
+                // pnotify('Error', getErrorAsString(error.data), 'error');
             });
 
     };

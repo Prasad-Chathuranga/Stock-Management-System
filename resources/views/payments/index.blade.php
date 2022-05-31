@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'RentOut Management')
-@section('subtitle', 'Items')
+@section('title', 'Payment Management')
+@section('subtitle', 'Payments')
 
 
 @section ('breadcrumb' )
-<li class="breadcrumb-item"><a href="">RentOuts</a></li>
+<li class="breadcrumb-item"><a href="">Payments</a></li>
 @endsection
 
 @section('content')
-<section ng-controller="RentOutController">
+<section ng-controller="PaymentController">
     <div class="mt-3 ml-4 mr-3 mb-0 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="font-weight-bold text-primary pt-3">RentOuts</h6>
-        <a type="button" class="btn btn-primary me-2 d-flex" href="{{route('rentout.create')}}">New</a>
+        <h6 class="font-weight-bold text-primary pt-3">Payments</h6>
+        <a type="button" class="btn btn-primary me-2 d-flex" href="{{route('payment.create')}}">New</a>
     </div>
     <hr />
   <div class="card-body">
@@ -21,47 +21,50 @@
           <thead class="thead-light">
             <tr>
               <th>#</th>
+              <th>Customer Number</th>
               <th>Name</th>
               <th>Email</th>
               <th>Order Number</th>
-              <th>Total</th>
-              <th>Paid</th>
-              <th>Created On</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>Payment Number</th>
+              <th>Paid Amount</th>
+              <th>Due Amount</th>
+              <th>Order Amount</th>
+              
             </tr>
         </thead>
           <tbody>
-  @foreach ($orders as $key => $order )
+              
+  @foreach ($payments as $key => $payment )
                <tr>
                  <td>{{$key+1}}</td>
-                 <td>{{$order->customer->first_name}} {{$order->customer->last_name}}</td>
-                 <td>{{$order->customer->email}}</td>
-                 <td>{{$order->order_no}}</td>
-                 <td>{{number_format($order->total, 2)}}</td>
-                 <td>{{number_format($order->paid, 2)}}</td>
-                 {{-- <td>
- 
-                    @if(isset($item->image))
-                    <img style="max-height: 50px;  object-fit: cover" src="{{url('images/items/')}}/{{$item->image}}" class="img-fluid" >
-                      <span class="feather icon-chevron-down live-icon"></span>
-                      @else
-                      <img style="max-height: 50px;  object-fit: cover" src="{{url('images/items/')}}/default_image.png" class="img-fluid" >
-                      <span class="feather icon-chevron-down live-icon"></span>
-                    @endif
-                  </td> --}}
-                 
+                 <td>{{$payment->customer[0]->customer_no}}</td>
+                 <td>{{$payment->customer[0]->first_name}} {{$payment->customer[0]->last_name}}</td>
+                 <td>{{$payment->customer[0]->email}}</td>
+                 <td>{{$payment->order->order_no}}</td>
+                 <td>{{$payment->payment_no}}</td>
+                 <td>{{number_format($payment->amount, 2)}}</td>
+                 <td>{{number_format($payment->due, 2)}}</td>
+                 <td>{{number_format($payment->order->total, 2)}}</td>
+                
+                   {{-- <td> --}}
+                
+                 {{-- <td>{{number_format($payment->$order->total, 2)}}</td>
+                 <td>{{number_format($payment->$order->paid, 2)}}</td>
                   
-                 <td>{{date('Y-m-d h:i:s A', strtotime($order->created_at))}}</td>
-                 <td>@if($order->status==0)<label class="badge badge-warning">
+                 <td>{{date('Y-m-d h:i:s A', strtotime($payment->$order->created_at))}}</td>
+                 <td>@if($payment->$order->status==0)<label class="badge badge-warning">
                   <i class="" >Incomplete</i>
               </label>@endif</td>
                  <td>
+    
+                </td> --}}
+                {{-- <td>
      
-                   <a style="cursor: pointer" data-toggle="modal" data-target=".bd-example-modal-lg" ng-click="getOrderDetails({{$order->id}})"  title="Edit Item" class="text-info"> <i class="fa fa-binoculars"></i></a>
-                  {{-- <a style="cursor: pointer"  data-toggle='tooltip' data-placement="right" ng-click="delete({{$item->id}})" title="Delete Category" class="ml-3 text-danger"> <i class="fas fa-fw fa-trash"></i></a>  --}}
-         
-                </td>
+                    <a style="cursor: pointer" data-toggle="modal" 
+                    data-target=".bd-example-modal-lg" 
+                    ng-click="getOrderDetails({{$payment->order->id}})"  title="Edit Item" class="text-info"> <i class="fa fa-binoculars"></i></a>
+                
+                 </td> --}}
                </tr>
            @endforeach  
           </tbody>
@@ -75,7 +78,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title text-info" id="exampleModalLabel"><b>Order Summary - @{{data.order_details.order.order_no}}</b></h6>
+        <h6 class="modal-title text-info" id="exampleModalLabel"><b>Order Summary</b></h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -156,7 +159,7 @@
 </div>
 
   </div>
-  <input type="hidden" ng-init="url='{{ route('rentout.store') }}'; order_details_url='{{route('order_details')}}'" />
+  <input type="hidden" ng-init="url='{{ route('payment.store') }}'; order_details_url='{{route('order_details')}}'" />
 </section>
 
 @endsection
@@ -176,7 +179,7 @@
  <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
  <script src="{{ asset('vendor/datatables/dataTables.responsive.min.js') }}" type="text/javascript"></script>
  <script src="{{ asset('vendor/datatables/responsive.bootstrap4.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/angular/rentout.js') }}"></script>
+<script src="{{ asset('js/angular/payment.js') }}"></script>
 
  <!-- Page level custom scripts -->
  <script>

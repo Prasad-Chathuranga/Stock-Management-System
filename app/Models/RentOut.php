@@ -10,4 +10,6 @@ class RentOut extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    
 }

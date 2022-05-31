@@ -105,6 +105,12 @@
         <span>Rent Outs</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('payment.index')}}">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Payments</span>
+      </a>
+    </li>
     <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>
   </ul>

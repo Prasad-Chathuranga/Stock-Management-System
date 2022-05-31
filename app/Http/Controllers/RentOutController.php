@@ -10,6 +10,7 @@ use App\Models\RentOut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class RentOutController extends Controller
 {
@@ -21,7 +22,8 @@ class RentOutController extends Controller
     public function index()
     {
         //
-        return view('rentout.index');
+        $orders = Order::with('customer')->get();
+        return view('rentout.index', compact('orders'));
     }
 
     /**
@@ -44,16 +46,17 @@ class RentOutController extends Controller
     public function store(Request $request)
     {
         //
-
+// dd($request->item);
         DB::beginTransaction();
-dd( $request->customer->first_name);
+
+
         $customer = new Customer();
-        $customer->first_name = $request->customer->first_name;
-        $customer->last_name = $request->customer->last_name;
-        $customer->address = $request->customer->address;
-        $customer->mobile_1 = $request->customer->mobile_1;
-        $customer->mobile_2 = $request->customer->mobile_2;
-        $customer->email = $request->customer->email;
+        $customer->first_name = $request->customer['first_name'];
+        $customer->last_name = $request->customer['last_name'];
+        $customer->address = $request->customer['address'];
+        $customer->mobile_1 = $request->customer['mobile_1'];
+        $customer->mobile_2 = $request->customer['mobile_2'];
+        $customer->email = $request->customer['email'];
 
         try {
            $customer->save();
@@ -64,10 +67,10 @@ dd( $request->customer->first_name);
 
         $order = new Order();
         $order->customer_id = $customer->id;
-        $order->total = $request->amounts->final_total;
-        $order->paid = $request->order->amount;
-        $order->notes = $request->order->reference;
-        if($request->amounts->final_total > $request->order->amount): $order->status = 0; else: $order->status = 1; endif;
+        $order->total = $request->amounts['final_total'];
+        $order->paid = $request->order['amount'];
+        $order->notes = $request->order['reference'];
+        if($request->amounts['final_total'] > $request->order['amount']): $order->status = 0; else: $order->status = 1; endif;
         $order->emailed = 0;
         $order->created_by = Auth::user()->id;
         
@@ -80,15 +83,15 @@ dd( $request->customer->first_name);
 
          
 
-         foreach ($request->items as $key => $item) {
+         foreach ($request->item as $key => $item) {
             $orderedItem = new OrderedItem();
             $orderedItem->order_id = $order->id;
-            $orderedItem->item_id = $item->id;
-            $orderedItem->price = $item->price;
-            $orderedItem->quantity = $item->quantity;
-            $orderedItem->discount = $item->discount;
-            $orderedItem->discount_type = $item->discount_type;
-            $orderedItem->total = $item->gross_total;
+            $orderedItem->item_id = $item['id'];
+            $orderedItem->price = $item['price'];
+            $orderedItem->quantity = $item['quantity'];
+            $orderedItem->discount = $item['discount'];
+            $orderedItem->discount_type = $item['discount_type'];
+            $orderedItem->total = $item['gross_total'];
 
             try {
                 $orderedItem->save();
@@ -101,9 +104,9 @@ dd( $request->customer->first_name);
 
          $payment = new Payment();
          $payment->order_id = $order->id;
-         $payment->notes = $request->order->reference;
-         $payment->amount = $request->order->amount;
-         $payment->due = $request->amounts->due_amount;
+         $payment->notes = $request->order['reference'];
+         $payment->amount = $request->order['amount'];
+         $payment->due = $request->amounts['due_amount'];
 
          try {
             $payment->save();
@@ -160,5 +163,23 @@ dd( $request->customer->first_name);
     public function destroy(RentOut $rentOut)
     {
         //
+    }
+
+    /**
+     * Get Order Details
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function getOrderDetails(Request $request){
+        
+        $id = $request->query('id');
+        $data = new stdClass();
+        $data->payments = Payment::where('order_id',$id)->get();
+        $data->items = OrderedItem::with('item')->where('order_id',$id)->get();
+        $data->order = Order::where('id', $id)->get();
+        
+        return response()->json($data);
+
     }
 }

@@ -137,10 +137,10 @@ function returnSenskaDateTimeString($date){
     
     var ampm='';
     if(hours>12){
-        ampm='pm';
+        ampm='PM';
         hours-=12;
     }else{
-        ampm='am';
+        ampm='AM';
     }
 
     return date+"-"+month+"-"+yr+" "+hours+":"+mins +" "+ampm;
