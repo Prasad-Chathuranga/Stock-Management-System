@@ -54,6 +54,7 @@ class RentOutController extends Controller
         $customer->first_name = $request->customer['first_name'];
         $customer->last_name = $request->customer['last_name'];
         $customer->address = $request->customer['address'];
+        $customer->customer_no = $this->generateCustomerNumber();
         $customer->mobile_1 = $request->customer['mobile_1'];
         $customer->mobile_2 = $request->customer['mobile_2'];
         $customer->email = $request->customer['email'];
@@ -69,6 +70,7 @@ class RentOutController extends Controller
         $order->customer_id = $customer->id;
         $order->total = $request->amounts['final_total'];
         $order->paid = $request->order['amount'];
+        $order->order_no = $this->generateOrderNumber();
         $order->notes = $request->order['reference'];
         if($request->amounts['final_total'] > $request->order['amount']): $order->status = 0; else: $order->status = 1; endif;
         $order->emailed = 0;
@@ -105,6 +107,7 @@ class RentOutController extends Controller
          $payment = new Payment();
          $payment->order_id = $order->id;
          $payment->notes = $request->order['reference'];
+         $payment->payment_no = $this->generatePaymentNumber();
          $payment->amount = $request->order['amount'];
          $payment->due = $request->amounts['due_amount'];
 
@@ -180,6 +183,42 @@ class RentOutController extends Controller
         $data->order = Order::where('id', $id)->get();
         
         return response()->json($data);
+
+    }
+
+    /**
+     * Genrate Payment Number
+     *
+     * @return void
+     */
+    public function generatePaymentNumber(){
+
+        $payment = Payment::latest()->first()->pluck('id');
+        return 'PAY'. sprintf('%06', $payment);
+
+    }
+
+     /**
+     * Genrate Payment Number
+     *
+     * @return void
+     */
+    public function generateOrderNumber(){
+
+        $payment = RentOut::latest()->first()->pluck('id');
+        return 'ORD'. sprintf('%06', $payment);
+
+    }
+
+     /**
+     * Genrate Payment Number
+     *
+     * @return void
+     */
+    public function generateCustomerNumber(){
+
+        $payment = Customer::latest()->first()->pluck('id');
+        return 'CUS'. sprintf('%06', $payment);
 
     }
 }

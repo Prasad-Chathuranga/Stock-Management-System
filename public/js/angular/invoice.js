@@ -1,4 +1,4 @@
-app.controller('PaymentController', ($scope, $http, Loader, $timeout) => {
+app.controller('InvoiceController', ($scope, $http, Loader, $timeout) => {
 
     let items = [];
     $scope.data = [];
@@ -119,29 +119,6 @@ app.controller('PaymentController', ($scope, $http, Loader, $timeout) => {
             });
 
     };
-
-    $scope.init_select2_orders = () => {
-
-        $('#orders').select2({
-
-            ajax: {
-                url: $scope.orders_url,
-                data: function (term) {
-                    // var query = {
-                    //     search: params.term
-                    // }
-    
-                    // Query parameters will be ?search=[term]&type=public
-                    return term;
-                },
-                dataType: 'json'
-            }
-
-        }).on('change', function () {
-            // $scope.data.category_id = document.getElementById('categories').value;
-        });
-
-    }
 
     $scope.delete = (id) => {
 

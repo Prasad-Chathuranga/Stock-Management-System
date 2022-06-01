@@ -32,6 +32,7 @@ Route::get('/categories', [App\Http\Controllers\ItemController::class, 'getAllCa
 Route::get('/items', [App\Http\Controllers\ItemController::class, 'getAllItems'])->name('items');
 Route::get('/get-item', [App\Http\Controllers\ItemController::class, 'getSingleItem'])->name('get_item');
 Route::get('/get-order-details', [App\Http\Controllers\RentOutController::class, 'getOrderDetails'])->name('order_details');
-
-
+Route::get('/print-preview/{id}', [App\Http\Controllers\PaymentController::class, 'printPreview'])->name('print_preview');
+Route::get('/download-invoice/{id}', [App\Http\Controllers\PaymentController::class, 'downloadInvoice'])->name('download_invoice');
+Route::get('/orders', [App\Http\Controllers\PaymentController::class, 'getAllOrders'])->name('orders');
 

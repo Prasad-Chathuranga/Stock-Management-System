@@ -12,7 +12,7 @@
         <span>Dashboard</span></a>
     </li>
     <hr class="sidebar-divider">
-    <div class="sidebar-heading">
+    {{-- <div class="sidebar-heading">
       Features
     </div>
     <li class="nav-item">
@@ -86,7 +86,10 @@
           <a class="collapse-item" href="blank.html">Blank Page</a>
         </div>
       </div>
-    </li>
+    </li> --}}
+      <div class="sidebar-heading">
+      Stock
+    </div>
     <li class="nav-item">
       <a class="nav-link" href="{{route('category.index')}}">
         <i class="fas fa-fw fa-chart-area"></i>

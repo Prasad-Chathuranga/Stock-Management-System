@@ -14,6 +14,16 @@ class Payment extends Model
     }
 
     public function customer(){
-        return $this->hasManyThrough(Customer::class, Order::class, 'customer_id','id','order_id', 'id'); 
+        // return $this->hasOneThrough(Order::class, Customer::class, 'id','id','id', 'id'); 
+        return $this->hasOneThrough(
+            Customer::class,
+            Order::class,
+          
+            
+            'id', // Foreign key on the owners table...
+            'id', // Foreign key on the cars table...
+            'order_id', // Local key on the mechanics table...
+            'customer_id' // Local key on the cars table...
+        );
     }
 }

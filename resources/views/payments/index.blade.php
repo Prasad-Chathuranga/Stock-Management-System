@@ -29,7 +29,7 @@
               <th>Paid Amount</th>
               <th>Due Amount</th>
               <th>Order Amount</th>
-              
+              <th></th>
             </tr>
         </thead>
           <tbody>
@@ -37,9 +37,9 @@
   @foreach ($payments as $key => $payment )
                <tr>
                  <td>{{$key+1}}</td>
-                 <td>{{$payment->customer[0]->customer_no}}</td>
-                 <td>{{$payment->customer[0]->first_name}} {{$payment->customer[0]->last_name}}</td>
-                 <td>{{$payment->customer[0]->email}}</td>
+                 <td>{{$payment->customer->customer_no}}</td>
+                 <td>{{$payment->customer->first_name}} {{$payment->customer->last_name}}</td>
+                 <td>{{$payment->customer->email}}</td>
                  <td>{{$payment->order->order_no}}</td>
                  <td>{{$payment->payment_no}}</td>
                  <td>{{number_format($payment->amount, 2)}}</td>
@@ -58,13 +58,12 @@
                  <td>
     
                 </td> --}}
-                {{-- <td>
+                 <td>
      
-                    <a style="cursor: pointer" data-toggle="modal" 
-                    data-target=".bd-example-modal-lg" 
-                    ng-click="getOrderDetails({{$payment->order->id}})"  title="Edit Item" class="text-info"> <i class="fa fa-binoculars"></i></a>
+                    <a style="cursor: pointer" 
+                   title="Edit Item" href="{{ route('print_preview', $payment->id) }}" class="text-primary"> <i class="fa fa-print"></i></a>
                 
-                 </td> --}}
+                 </td> 
                </tr>
            @endforeach  
           </tbody>
