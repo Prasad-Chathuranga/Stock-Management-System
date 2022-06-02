@@ -30,24 +30,51 @@ app.controller('PaymentController', ($scope, $http, Loader, $timeout) => {
             id : id
         }})
             .then((response) => {
-                console.log(response);
+              
                 $scope.data.order_details = response.data;
-               
-                
+
                 response.data.order.forEach(element => {
                     $scope.data.order_details.order.created_at = returnSenskaDateTimeString(element.created_at);
                     $scope.data.order_details.order.order_num = element.order_no;
+                    $scope.data.order_info = element;
+                    $scope.data.order_info.due = element.total-element.paid;
+                    $scope.data.order_info.settle =  $scope.data.order_info.due;
                 });
                 // console.log(JSON.stringify(response.data.order));
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
                 // Loader.stop();
-                // pnotify('Error', getErrorAsString(error.data), 'error');
+                pnotify('Error', getErrorAsString(error.data), 'error');
                 // Loader.stop();
             });
     }
 
+    $scope.payForOrder = () =>{
+
+
+
+        $http.post($scope.pay_for_order_url, $scope.data.order_info)
+        .then((response) => {
+
+            if(response.data==='error'){
+                pnotify('Error', 'Entered amount is higher than Due Amount', 'error');
+            }
+            
+            // Loader.stop();
+            // pnotify('Success', response.data.message, 'success');
+            // $timeout(() => {
+            //     window.location = response.data.url;
+            // }, 2000);
+
+        })
+        .catch((error) => {
+            console.log(error);
+            // Loader.stop();
+            // console.log(error);
+            pnotify('Error', getErrorAsString(error.data), 'error');
+        });
+    }
   
 
 
@@ -138,7 +165,9 @@ app.controller('PaymentController', ($scope, $http, Loader, $timeout) => {
             }
 
         }).on('change', function () {
-            // $scope.data.category_id = document.getElementById('categories').value;
+            $scope.data.order_id = document.getElementById('orders').value;
+            console.log($scope.data.order_id);
+            $scope.getOrderDetails($scope.data.order_id);
         });
 
     }

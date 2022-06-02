@@ -55,7 +55,12 @@
                  <td>{{date('Y-m-d h:i:s A', strtotime($order->created_at))}}</td>
                  <td>@if($order->status==0)<label class="badge badge-warning">
                   <i class="" >Incomplete</i>
-              </label>@endif</td>
+              </label>
+              @elseif($order->status==1)
+              <label class="badge badge-success">
+                <i class="" >Complete</i>
+            </label>
+              @endif</td>
                  <td>
      
                    <a style="cursor: pointer" data-toggle="modal" data-target=".bd-example-modal-lg" ng-click="getOrderDetails({{$order->id}})"  title="Edit Item" class="text-info"> <i class="fa fa-binoculars"></i></a>
@@ -121,6 +126,11 @@
                 <div ng-if="order.status=='0'">
                 <label class="badge badge-warning">
                   <i class="" >Incomplete</i>
+              </label>
+                </div>
+                <div ng-if="order.status=='1'">
+                <label class="badge badge-success">
+                  <i class="" >Complete</i>
               </label>
                 </div>
               </th>

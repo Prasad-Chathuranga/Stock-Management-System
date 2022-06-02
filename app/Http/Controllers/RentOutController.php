@@ -193,8 +193,16 @@ class RentOutController extends Controller
      */
     public function generatePaymentNumber(){
 
-        $payment = Payment::latest()->first()->pluck('id');
-        return 'PAY'. sprintf('%06', $payment);
+       
+        $payment = Payment::latest()->first();
+        
+        $id = 0;
+        if(!$payment){
+            $id = 1;
+        }else{
+            $id = $payment->id;
+        }
+        return 'PAY'. sprintf('%06d', $id).'';
 
     }
 
@@ -205,8 +213,16 @@ class RentOutController extends Controller
      */
     public function generateOrderNumber(){
 
-        $payment = RentOut::latest()->first()->pluck('id');
-        return 'ORD'. sprintf('%06', $payment);
+       
+        $payment = Order::latest()->first();
+        
+        $id = 0;
+        if(!$payment){
+            $id = 1;
+        }else{
+            $id = $payment->id;
+        }
+        return 'ORD'. sprintf('%06d', $id).'';
 
     }
 
@@ -217,8 +233,16 @@ class RentOutController extends Controller
      */
     public function generateCustomerNumber(){
 
-        $payment = Customer::latest()->first()->pluck('id');
-        return 'CUS'. sprintf('%06', $payment);
+
+        $payment = Customer::latest()->first();
+        
+        $id = 0;
+        if(!$payment){
+            $id = 1;
+        }else{
+            $id = $payment->id;
+        }
+        return 'CUS'. sprintf('%06d', $id).'';
 
     }
 }

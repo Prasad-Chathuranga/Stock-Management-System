@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\OrderedItem;
 use App\Models\Payment;
 use App\Models\RentOut;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class PaymentController extends Controller
@@ -134,34 +136,107 @@ class PaymentController extends Controller
     }
 
     public function getAllOrders(Request $request){
-        $name = $request->query('term');
-        $category = $request->category_id;
 
-        dd($request->query('term'));
-
-    //     $item = RentOut::orderBy('id', 'desc')
-    //     ->when(!empty($name), function ($q1) use ($name) {
-
-    //             $q1->where('name','like',"%{$name}%");
-    //     })
-    //     ->when(!empty($category), function ($q1) use ($category) {
-
-    //         $q1->where('category_id',$category);
-    // });
-
+        $term = $request->query('term');
     
-    $result = [];
+        $item = Order::with('customer')
+       
+        ->whereHas('customer', function($query) use ($term) {
+            $query->where('customer_no','like','%'.$term.'%')
+            ->orWhere('first_name', 'like', '%'.$term.'%')
+            ->orWhere('last_name', 'like', '%'.$term.'%')
+            ->orWhere('email', 'like', '%'.$term.'%')
+            ->orWhere('order_no', 'like', '%'.$term.'%');
+        });
+       
 
-    if(isset($category)):
+        $result = [];
 
+   
         foreach ($item->get() as $val) {
-            $result[] = ['id' => $val->id, 'text' => $val->name];
+            $result[] = ['id' => $val->id, 'text' => 'Order No : '.$val->order_no
+            .' / '.'Order Amount : '. number_format($val->total, 2).' / '. 'Customer No : '.$val->customer->customer_no.' / '.'Customer Name : '.$val->customer->first_name.' '.$val->customer->last_name
+        ];
 
         }
  
-    endif;
-
-
     return response()->json(['results' => $result]);
+    }
+
+    
+    public function generatePaymentNumber(){
+
+        $payment = Payment::latest()->first();
+        
+        $id = 0;
+        if(!$payment){
+            $id = 1;
+        }else{
+            $id = $payment->id;
+        }
+        return 'PAY'. sprintf('%06d', $id).'';
+
+    }
+
+    /**
+     * payForOrder function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function payForOrder(Request $request){
+
+        
+       
+
+        DB::beginTransaction();
+
+        // dd($request);
+
+        $settle = $request->settle;
+        $due = $request->due;
+        $total = $request->total;
+
+        if($due<$settle):
+            return response()->json('error',200);
+        endif;
+
+        $payment = new Payment();
+        $payment->order_id = $request->id;
+        $payment->payment_no = $this->generatePaymentNumber();
+        $payment->notes = $request->notes;
+        $payment->amount = $request->settle;
+        $payment->due = $due - $settle; 
+
+    
+        try {
+            $payment->save();
+
+            $paid_invoices = Payment::whereOrderId($request->id)->latest()->first();
+            // dd($paid_invoices['due'] == 0);
+            if($paid_invoices['due'] == 0){
+                $order = Order::findOrFail($request->id);
+                $order->paid = $request->total;
+                $order->status = 1;
+
+                $order->save();
+
+                // Post::where('id',3)->update(['title'=>'Updated title']);
+            }else{
+                $order = Order::findOrFail($request->id);
+                $order->paid = $request->sett;
+                $order->status = 1;
+
+                $order->save();
+            }
+
+
+            DB::commit();
+            return response()->json(['message'=>'Payment Created !', 'url'=> route('payment.index')]);
+         } catch (\Throwable $th) {
+             DB::rollBack();
+             return response()->json(['message'=>$th->getMessage(),'code'=>422]);
+         }
+
     }
 }
