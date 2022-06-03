@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Item;
+use App\Models\Order;
+use App\Models\OrderedItem;
+use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +29,95 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $orders = Order::whereMonth('created_at', date('m'))->get();
+        $orders_last_month = Order::whereMonth('created_at', date('m', strtotime("last month")))->get();
+        $ordersAll = Order::all();
+        $customers = Customer::whereMonth('created_at', date('m'))->count();
+        $ordered_items = OrderedItem::whereYear('created_at', date('Y'))->count();
+        $stock = Item::all();
+        $order_total = 0;
+        $order_total_last_month = 0;
+        $stock_total = 0;
+        $order_precentage = 0;
+        $all_order_total = 0;
+        
+        foreach ($orders as $key => $order) {
+            $order_total += $order->total;
+            $order_precentage += $order->total / 100;
+        }
+
+        foreach ($ordersAll as $key => $all) {
+            $all_order_total += $all->total;
+        }
+
+
+        foreach ($stock as $key => $item) {
+            $stock_total += $item->stock;
+        }
+
+        foreach ($orders_last_month as $key => $last) {
+           $order_total_last_month += $last->total;
+        }
+        
+
+        $this_month = ($order_total/$all_order_total)*100;
+        $prev_month = ($order_total_last_month/$all_order_total)*100;
+
+        $precentage_orders = 0;
+
+        if($this_month > $prev_month){
+            $precentage_orders = $this_month-$prev_month;
+        }else{
+            $precentage_orders = $prev_month-$this_month;
+        }
+
+        return view('home', compact('order_total','order_precentage','ordered_items','customers','stock_total','precentage_orders'));
     }
+
+    public function getOrdersMonthWise(){
+
+        $users = Order::select('total', 'created_at')
+        ->get()
+        ->groupBy(function ($date) {
+            return Carbon::parse($date->created_at)->format('m');
+        });
+
+    $usermcount = [];
+    $userArr = [];
+    
+
+
+    foreach ($users as $keyMain => $value) {
+
+        $total = 0;
+
+        foreach ($value as $key => $user) {
+            $total += $user->total;
+         
+
+        }
+       
+           $usermcount[(int)$keyMain] = $total;
+       
+    }
+    
+ 
+    $month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    for ($i = 1; $i <= 12; $i++) {
+        if (!empty($usermcount[$i])) {
+            $userArr[$i]['count'] = $usermcount[$i];
+        } else {
+            $userArr[$i]['count'] = 0;
+        }
+        $userArr[$i]['month'] = $month[$i - 1];
+    }
+
+
+    return response()->json(array_values($userArr));
+
+
+    }
+
 }

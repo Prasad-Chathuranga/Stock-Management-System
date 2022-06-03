@@ -27,6 +27,37 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+let data = [];
+
+fetch(window.location.origin+'/orders-month-wise', {//options => (optional)
+
+    // mode: 'no-cors',
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  },
+  ).then(response => {
+    if (response.ok) {
+      response.json().then(json => {
+        data = json;
+      
+      });
+    }
+  });
+
+  let amounts = [];
+  var arr = [];
+  const getAmountFromArray = (data) => {
+    data.forEach(element => {
+      arr[arr.length] = element;
+     
+    });
+  
+    console.log(arr);
+  }
+
+
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
@@ -46,7 +77,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [0,0,0,0,0,0,0,10000,20000],
     }],
   },
   options: {
