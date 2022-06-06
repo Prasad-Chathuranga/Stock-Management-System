@@ -41,6 +41,7 @@ class HomeController extends Controller
         $stock_total = 0;
         $order_precentage = 0;
         $all_order_total = 0;
+        $latest_inv = Payment::with('order','customer')->latest()->take(5)->get();
         
         foreach ($orders as $key => $order) {
             $order_total += $order->total;
@@ -72,7 +73,10 @@ class HomeController extends Controller
             $precentage_orders = $prev_month-$this_month;
         }
 
-        return view('home', compact('order_total','order_precentage','ordered_items','customers','stock_total','precentage_orders'));
+        return view('home', compact('order_total',
+        'order_precentage','ordered_items',
+        'customers','stock_total',
+        'precentage_orders','latest_inv'));
     }
 
     public function getOrdersMonthWise(){
@@ -103,20 +107,33 @@ class HomeController extends Controller
     }
     
  
-    $month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     for ($i = 1; $i <= 12; $i++) {
         if (!empty($usermcount[$i])) {
-            $userArr[$i]['count'] = $usermcount[$i];
+            $userArr[$i] = $usermcount[$i];
         } else {
-            $userArr[$i]['count'] = 0;
+            $userArr[$i] = 0;
         }
-        $userArr[$i]['month'] = $month[$i - 1];
     }
-
 
     return response()->json(array_values($userArr));
 
+
+    }
+
+
+    public function getSalesItemWise(){
+
+        $items = OrderedItem::with('item')->get();
+$arr = [];
+        foreach ($items as $key => $value) {
+            if($value->id === $items[$key]['id']){
+                $arr[$key]['count'] = $value->quantity+$value->quantity;
+            }
+           
+        }
+
+        dd($arr);
 
     }
 

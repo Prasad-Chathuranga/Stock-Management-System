@@ -40,26 +40,13 @@ fetch(window.location.origin+'/orders-month-wise', {//options => (optional)
   ).then(response => {
     if (response.ok) {
       response.json().then(json => {
-        data = json;
-      
-      });
-    }
-  });
+        console.log(json);
+        // data = json;
+        var ctx = document.getElementById("myAreaChart");
 
-  let amounts = [];
-  var arr = [];
-  const getAmountFromArray = (data) => {
-    data.forEach(element => {
-      arr[arr.length] = element;
-     
-    });
-  
-    console.log(arr);
-  }
+        // Area Chart Example
 
 
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
@@ -77,7 +64,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0,0,0,0,0,0,0,10000,20000],
+      data: json,
     }],
   },
   options: {
@@ -108,8 +95,8 @@ var myLineChart = new Chart(ctx, {
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
+          callback: function(data, index, data) {
+            return '$' + number_format(data);
           }
         },
         gridLines: {
@@ -147,3 +134,11 @@ var myLineChart = new Chart(ctx, {
     }
   }
 });
+
+        
+      });
+    }
+  });
+
+
+

@@ -37,3 +37,4 @@ Route::get('/download-invoice/{id}', [App\Http\Controllers\PaymentController::cl
 Route::get('/orders', [App\Http\Controllers\PaymentController::class, 'getAllOrders'])->name('orders');
 Route::post('/pay-for-order', [App\Http\Controllers\PaymentController::class, 'payForOrder'])->name('pay_for_order');
 Route::get('/orders-month-wise', [App\Http\Controllers\HomeController::class, 'getOrdersMonthWise'])->name('orders_month_wise');
+Route::get('/sales-item-wise', [App\Http\Controllers\HomeController::class, 'getSalesItemWise'])->name('sales_item_wise');
