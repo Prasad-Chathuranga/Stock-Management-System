@@ -73,10 +73,12 @@ class HomeController extends Controller
             $precentage_orders = $prev_month-$this_month;
         }
 
+        $sales_items = $this->getSalesItemWise();
+
         return view('home', compact('order_total',
         'order_precentage','ordered_items',
         'customers','stock_total',
-        'precentage_orders','latest_inv'));
+        'precentage_orders','latest_inv','sales_items'));
     }
 
     public function getOrdersMonthWise(){
@@ -124,16 +126,30 @@ class HomeController extends Controller
 
     public function getSalesItemWise(){
 
-        $items = OrderedItem::with('item')->get();
-$arr = [];
-        foreach ($items as $key => $value) {
-            if($value->id === $items[$key]['id']){
-                $arr[$key]['count'] = $value->quantity+$value->quantity;
-            }
-           
+
+        $data = [];
+        $items = OrderedItem::with('item')->distinct('item_id')->select('item_id')->limit(5)->get();
+
+        foreach ($items as $key => $item) {
+            $quantity = OrderedItem::whereItemId($item->item_id)
+            ->sum('quantity');
+            $data[$key]['quantity'] = $quantity;
+
+            $data[$key]['item'] = $item->item->name;
+            $data[$key]['stock'] = $item->item->stock;
+
+            $precentage = round($quantity / $item->item->stock * 100);
+
+            $data[$key]['precentage'] = $precentage;
+
+            if($precentage > 50): $data[$key]['class'] = 'bg-success'; else: $data[$key]['class'] = 'bg-warning'; endif;
+
+
+
+            $data[$key]['id'] = $item->item_id;
         }
 
-        dd($arr);
+        return $data;
 
     }
 

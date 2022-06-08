@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderedItem;
 use App\Models\Payment;
@@ -97,6 +98,13 @@ class RentOutController extends Controller
 
             try {
                 $orderedItem->save();
+
+                $stock_item = Item::findOrFail($item['id']);
+                // $stock = $stock_item->stock;
+                // dd($stock - $item['quantity']);
+                $stock_item->stock = $stock_item->stock - $item['quantity'];
+                $stock_item->save();
+
              } catch (\Throwable $th) {
                 DB::rollBack();
                  return response()->json(['message'=>$th->getMessage(),'code'=>422]);

@@ -115,7 +115,7 @@
       <div class="card mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Items Sold</h6>
-          <div class="dropdown no-arrow">
+          {{-- <div class="dropdown no-arrow">
             <a class="dropdown-toggle btn btn-primary btn-sm" href="#" role="button" id="dropdownMenuLink"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Month <i class="fas fa-chevron-down"></i>
@@ -128,19 +128,24 @@
               <a class="dropdown-item active" href="#">Month</a>
               <a class="dropdown-item" href="#">This Year</a>
             </div>
-          </div>
+          </div> --}}
         </div>
         <div class="card-body">
+          @foreach ($sales_items as $key => $sale)
+              
+         
           <div class="mb-3">
-            <div class="small text-gray-500">Oblong T-Shirt
-              <div class="small float-right"><b>600 of 800 Items</b></div>
+            <div class="small text-gray-500">{{$sale['item']}}
+              <div class="small float-right"><b>{{$sale['quantity']}} of {{$sale['stock']}} Items - {{$sale['precentage']}}%</b></div>
             </div>
             <div class="progress" style="height: 12px;">
-              <div class="progress-bar bg-warning" role="progressbar" style="width: 80%" aria-valuenow="80"
+              <div class="progress-bar {{$sale['class']}}" role="progressbar" style="width: {{$sale['precentage']}}%" aria-valuenow="80"
                 aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
-          <div class="mb-3">
+
+          @endforeach
+          {{-- <div class="mb-3">
             <div class="small text-gray-500">Gundam 90'Editions
               <div class="small float-right"><b>500 of 800 Items</b></div>
             </div>
@@ -175,7 +180,7 @@
               <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
                 aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-          </div>
+          </div> --}}
         </div>
         <div class="card-footer text-center">
           <a class="m-0 small text-primary card-link" href="#">View More <i
