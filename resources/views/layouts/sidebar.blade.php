@@ -92,19 +92,19 @@
     </div>
     <li class="nav-item">
       <a class="nav-link" href="{{route('category.index')}}">
-        <i class="fas fa-fw fa-chart-area"></i>
+        <i class="fas fa-fw fa-list-alt"></i>
         <span>Category</span>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{route('item.index')}}">
-        <i class="fas fa-fw fa-chart-area"></i>
+        <i class="fa fa-fw fa-cog"></i>
         <span>Items</span>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{route('rentout.index')}}">
-        <i class="fas fa-fw fa-chart-area"></i>
+        <i class="fa fa-fw fa-usd"></i>
         <span>Rent Outs</span>
       </a>
     </li>
@@ -114,6 +114,14 @@
         <span>Payments</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('payment.index')}}">
+        <i class="fa fa-fw fa-handshake-o"></i>
+        <span>Customers</span>
+      </a>
+    </li>
     <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>
   </ul>
+
+ 

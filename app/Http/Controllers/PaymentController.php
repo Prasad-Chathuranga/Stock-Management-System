@@ -129,7 +129,9 @@ class PaymentController extends Controller
         $pdf = PDF::loadView('invoice.pdf_invoice',$data);
         $pdf->setOptions(['isHtml5ParserEnabled', false]);
      
-        return $pdf->stream('nicesnippets.pdf');
+        $filename = 'Payment for '. $payment[0]->order->order_no . date('Y-m-d H:i A');
+
+        return $pdf->download($filename . '.pdf');
       
 
      

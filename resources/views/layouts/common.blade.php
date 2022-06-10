@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title> {{ env('APP_NAME')}}: @yield('title')  </title>
+    <title> Store </title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -27,39 +27,29 @@
  
 </head>
 <body id="page-top">
-    <div class="loader"></div>
-    <div id="app" ng-app="sms">
+   
     <div id="wrapper">
-@include('layouts.sidebar')
-
-        <div id="content-wrapper" class="d-flex flex-column">
+        {{-- <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                @include('layouts.topbar')
+                 --}}
                 <div class="container-fluid" id="container-wrapper">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                      <h1 class="h3 mb-0 text-gray-800">@yield('title')</h1>
-                      <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="./">Dashboard</a></li>
-                       @yield('breadcrumb')
-                      </ol>
-                    </div>
+                    
                   
                    <div class="row">
                     <div class="col-lg-12">
-                        <div class="card mb-4">
+                        
                           @yield('content')
-                        </div>
+                        
                     </div>
                        
                    </div>
             </div>
-        </div>
-        </div>
+        {{-- </div>
+        </div> --}}
 
      
 
-        
-    </div>
+
     </div>
 
  <!-- Scripts -->
