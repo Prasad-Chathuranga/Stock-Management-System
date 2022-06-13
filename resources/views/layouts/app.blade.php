@@ -73,6 +73,7 @@
     <script src="{{ asset('js/pnotify/js/pnotify.custom.min.js')}}"></script>
     <script src="{{ asset('js/sweet-alert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('vendor/marquee/jquery.marquee.min.js') }}"></script>
 <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/angular/main.js')}}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>

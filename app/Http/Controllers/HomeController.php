@@ -32,6 +32,7 @@ class HomeController extends Controller
 
         $orders = Order::whereMonth('created_at', date('m'))->get();
         $orders_last_month = Order::whereMonth('created_at', date('m', strtotime("last month")))->get();
+        $orders_today = Order::whereDate('created_at', date('d'))->sum('total');
         $ordersAll = Order::all();
         $customers = Customer::whereMonth('created_at', date('m'))->count();
         $ordered_items = OrderedItem::whereYear('created_at', date('Y'))->count();
@@ -42,7 +43,18 @@ class HomeController extends Controller
         $order_precentage = 0;
         $all_order_total = 0;
         $latest_inv = Payment::with('order','customer')->latest()->take(5)->get();
+        $items = Item::with('category')->where('stock', '<', 5)->get();
+        $ordersByCustomers = Order::with('customer')->get();
+
+        $data = [];
+        foreach ($ordersByCustomers as $key => $value) {
+           $data[$key]['customer'] = $value->customer['first_name'].' '.$value->customer['last_name'];
+           $data[$key]['customer_no'] = $value->customer['customer_no'];
+           $data[$key]['id'] = $value->customer['first_name'].' '.$value->customer['id'];
+           $data[$key]['total'] =+$value->total;
+        }
         
+
         foreach ($orders as $key => $order) {
             $order_total += $order->total;
             $order_precentage += $order->total / 100;
@@ -77,8 +89,8 @@ class HomeController extends Controller
 
         return view('home', compact('order_total',
         'order_precentage','ordered_items',
-        'customers','stock_total',
-        'precentage_orders','latest_inv','sales_items'));
+        'customers','stock_total','data',
+        'precentage_orders','latest_inv','items','orders_today','sales_items'));
     }
 
     public function getOrdersMonthWise(){
@@ -121,6 +133,11 @@ class HomeController extends Controller
     return response()->json(array_values($userArr));
 
 
+    }
+
+    public function itemsInReOrderStatus(){
+        $items = Item::where('stock', '<', 5)->get();
+        return $items;
     }
 
 

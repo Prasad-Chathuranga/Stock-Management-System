@@ -38,3 +38,4 @@ Route::get('/orders', [App\Http\Controllers\PaymentController::class, 'getAllOrd
 Route::post('/pay-for-order', [App\Http\Controllers\PaymentController::class, 'payForOrder'])->name('pay_for_order');
 Route::get('/orders-month-wise', [App\Http\Controllers\HomeController::class, 'getOrdersMonthWise'])->name('orders_month_wise');
 Route::get('/sales-item-wise', [App\Http\Controllers\HomeController::class, 'getSalesItemWise'])->name('sales_item_wise');
+// Route::get('/reorder-items', [App\Http\Controllers\HomeController::class, 'itemsInReOrderStatus'])->name('items_reorder');
