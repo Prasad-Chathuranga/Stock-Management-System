@@ -76,7 +76,7 @@
     <script src="{{ asset('vendor/marquee/jquery.marquee.min.js') }}"></script>
 <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/angular/main.js')}}"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
     @yield('script')  
 </body>

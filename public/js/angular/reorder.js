@@ -1,4 +1,4 @@
-app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
+app.controller('ReOrderController', ($scope, $http, Loader, $timeout) => {
 
     let items = [];
     $scope.data = [];
@@ -42,6 +42,28 @@ app.controller('RentOutController', ($scope, $http, Loader, $timeout) => {
             });
 
     };
+
+    $scope.updateStock = (item) => {
+        $scope.data._method = 'put';
+        $scope.data.item = item;
+        $scope.data.category = item.category;
+
+        var data = {
+            item: JSON.stringify($scope.data.item),
+            new_stock : $scope.data.new[item.id].to_be_update
+        }
+
+        $http.put(window.location.origin+'/update-stock/'+ item.id, JSON.stringify(data))
+                .then((response) => {
+                    pnotify('Success', response.data.message, 'success');
+                    $timeout(() => {
+                        window.location = response.data.url;
+                      }, 2000);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+    }
 
 
 
