@@ -8,7 +8,7 @@
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">
       <a class="nav-link" href="{{route('home')}}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <i class="fas fa-fw fa-home"></i>
         <span>Dashboard</span></a>
     </li>
     <hr class="sidebar-divider">
@@ -87,9 +87,6 @@
         </div>
       </div>
     </li> --}}
-      <div class="sidebar-heading">
-      Stock
-    </div>
     <li class="nav-item">
       <a class="nav-link" href="{{route('category.index')}}">
         <i class="fas fa-fw fa-list-alt"></i>
@@ -110,14 +107,20 @@
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{route('payment.index')}}">
-        <i class="fas fa-fw fa-chart-area"></i>
+        <i class="fa fa-fw fa-credit-card"></i>
         <span>Payments</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{route('payment.index')}}">
-        <i class="fa fa-fw fa-handshake-o"></i>
+      <a class="nav-link" href="{{route('customer.index')}}">
+        <i class="fa fa-fw fa-users"></i>
         <span>Customers</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('reorder.index')}}">
+        <i class="fa fa-fw fa-box"></i>
+        <span>Re-Order</span>
       </a>
     </li>
     <hr class="sidebar-divider">

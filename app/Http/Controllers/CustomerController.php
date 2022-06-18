@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use stdClass;
 
 class CustomerController extends Controller
 {
@@ -15,6 +16,8 @@ class CustomerController extends Controller
     public function index()
     {
         //
+        $customers = Customer::all();
+        return view('customer.index', compact('customers'));
     }
 
     /**
@@ -81,5 +84,54 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         //
+    }
+
+    /**
+     * get All Customers to Select 2
+     *
+     * @param Request $request
+     * @return $result
+     */
+    public function getAllCustomers(Request $request){
+        $term = $request->query('term');
+
+        $customer = Customer::orderBy('id', 'desc')
+        ->when(!empty($name), function ($q1) use ($term) {
+            $q1->where('first_name', 'like', '%'.$term.'%')
+            ->orWhere('last_name', 'like', '%'.$term.'%')
+            ->orWhere('email', 'like', '%'.$term.'%')
+            ->orWhere('order_no', 'like', '%'.$term.'%');
+        });
+
+    
+    $result = [];
+
+  
+
+        foreach ($customer->get() as $val) {
+            $result[] = ['id' => $val->id, 'text' => $val->customer_no . ' - '.$val->first_name];
+
+        }
+ 
+ 
+
+
+    return response()->json(['results' => $result]);
+    }
+
+    /**
+     * Get Customer Details
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function getCustomerDetails(Request $request){
+        
+        $id = $request->query('id');
+        $data = Customer::findOrFail($id);
+      
+        
+        return response()->json($data);
+
     }
 }

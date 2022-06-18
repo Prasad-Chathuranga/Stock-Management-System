@@ -130,6 +130,19 @@
                     <div class="tab">
                         <h6 class="text-info"><strong>Customer Details</strong></h6>
                         <hr>
+
+                            <div class="form-group">
+                                <label for="customers" class="font-weight-bold">Customer</label>
+                                 <select style="width:100%" name="customers" id="customers" class="select2 form-control">
+                                    <option value="">Look for a Customer...</option>
+                                </select> 
+
+                            </div>
+
+                      
+
+                        
+
                         <div class="form-group">
                             <label class="font-weight-bold" for="exampleInputEmail1">First Name</label>
                             <input type="text" ng-model="customer.first_name" class="form-control" id="exampleInputEmail1"
@@ -162,10 +175,9 @@
 
                         <div class="form-group">
                             <label class="font-weight-bold" for="exampleInputEmail1">Email</label>
-                            <input type="text" ng-model="customer.email" class="form-control" id="exampleInputEmail1"
+                            <input type="email" ng-model="customer.email" class="form-control" id="exampleInputEmail1"
                                 aria-describedby="emailHelp" placeholder="Enter Email Address">
-                        </div>
-
+                        </div> 
                     </div>
 
 
@@ -343,10 +355,13 @@
         </div>
         <input type="hidden" ng-init="url='{{ route('rentout.store') }}';
                 categories_url ='{{ route('categories') }}';
+                customers_url ='{{ route('customers') }}';
+                init_select2_customers(); 
                 init_select2_categories();
                 items_url ='{{ route('items') }}';
                 init_select2_items();
-                get_item_url = '{{ route('get_item') }}';" />
+                get_item_url = '{{ route('get_item') }}';
+                customer_details_url = '{{route('customer_details')}}';" />
         @if (isset($item))
             <input type="hidden" ng-init="init({{ $item->id }});" />
         @endif
@@ -366,6 +381,11 @@
         .select2-container--default .select2-selection--single {
             height: 40px;
         }
+
+        /* #select2-customers-container{
+            width: 100%;
+        } */
+       
 
         /* Style the input fields */
 
@@ -436,12 +456,9 @@
         }
 
         function nextPrev(n) {
+
             // This function will figure out which tab to display
             var x = document.getElementsByClassName("tab");
-            var categories = $('#categories').val();
-            var items = $('#items').val();
-
-
             // if(categories & items){
                 x[currentTab].style.display = "none";
                 currentTab = currentTab + n;
