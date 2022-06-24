@@ -63,4 +63,11 @@
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
   ),
+  'vatttan/apdf' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Vatttan\\Apdf\\ApdfServiceProvider',
+    ),
+  ),
 );

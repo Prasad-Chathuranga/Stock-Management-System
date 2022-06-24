@@ -123,6 +123,12 @@
         <span>Re-Order</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('grn.index')}}">
+        <i class="fa fa-fw fa-plus"></i>
+        <span>GRN</span>
+      </a>
+    </li>
     <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>
   </ul>

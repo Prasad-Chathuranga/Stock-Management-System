@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('g_r_n_s', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('grn_no');
+            $table->float('total');
+            $table->string('notes');
+            $table->integer('created_by');
             $table->timestamps();
         });
     }

@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\GRNController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RentOutController;
 use App\Http\Controllers\ReOrderController;
 use Illuminate\Support\Facades\Route;
-
+use Vatttan\Apdf\Apdf;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/category', CategoryController::class);
 Route::resource('/item', ItemController::class);
@@ -32,6 +35,7 @@ Route::resource('/rentout', RentOutController::class);
 Route::resource('/payment', PaymentController::class);
 Route::resource('/customer', CustomerController::class);
 Route::resource('/reorder', ReOrderController::class);
+Route::resource('/grn', GRNController::class);
 Route::get('/categories', [App\Http\Controllers\ItemController::class, 'getAllCategories'])->name('categories');
 Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'getAllCustomers'])->name('customers');
 Route::get('/items', [App\Http\Controllers\ItemController::class, 'getAllItems'])->name('items');

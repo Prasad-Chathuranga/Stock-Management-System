@@ -24,7 +24,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::l0jqgjPr314CFVYG',
+            '_route' => 'generated::0Icu62RXr27yW28z',
           ),
           1 => NULL,
           2 => 
@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::e9zP1vWxxUkFuwK8',
+            '_route' => 'generated::5H3aw53ap86RRkcb',
           ),
           1 => NULL,
           2 => 
@@ -122,7 +122,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::jJ27XRP2drXYrlQW',
+            '_route' => 'generated::tQAJcarzZkMKIZGh',
           ),
           1 => NULL,
           2 => 
@@ -159,7 +159,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::egbA5yLEw31OS4B6',
+            '_route' => 'generated::MnwD1ZUuw1ufHf61',
           ),
           1 => NULL,
           2 => 
@@ -214,7 +214,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Fsm3lYlxgv2YWrsD',
+            '_route' => 'generated::XKIpG065hk6n4nVg',
           ),
           1 => NULL,
           2 => 
@@ -305,7 +305,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::xoYo4xb0Ym8hFBQ5',
+            '_route' => 'generated::ful8P37VFkRWUrNn',
           ),
           1 => NULL,
           2 => 
@@ -674,6 +674,62 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/grn' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'grn.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'grn.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/grn/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'grn.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/categories' => 
       array (
         0 => 
@@ -876,7 +932,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/p(?|a(?|ssword/reset/([^/]++)(*:37)|yment/([^/]++)(?|(*:61)|/edit(*:73)|(*:80)))|rint\\-preview/([^/]++)(*:111))|/c(?|ategory/([^/]++)(?|(*:144)|/edit(*:157)|(*:165))|ustomer/([^/]++)(?|(*:193)|/edit(*:206)|(*:214)))|/item/([^/]++)(?|(*:241)|/edit(*:254)|(*:262))|/re(?|ntout/([^/]++)(?|(*:294)|/edit(*:307)|(*:315))|order/([^/]++)(?|(*:341)|/edit(*:354)|(*:362)))|/download\\-invoice/([^/]++)(*:399)|/update\\-stock/([^/]++)(*:430))/?$}sDu',
+      0 => '{^(?|/p(?|a(?|ssword/reset/([^/]++)(*:37)|yment/([^/]++)(?|(*:61)|/edit(*:73)|(*:80)))|rint\\-preview/([^/]++)(*:111))|/c(?|ategory/([^/]++)(?|(*:144)|/edit(*:157)|(*:165))|ustomer/([^/]++)(?|(*:193)|/edit(*:206)|(*:214)))|/item/([^/]++)(?|(*:241)|/edit(*:254)|(*:262))|/re(?|ntout/([^/]++)(?|(*:294)|/edit(*:307)|(*:315))|order/([^/]++)(?|(*:341)|/edit(*:354)|(*:362)))|/grn/([^/]++)(?|(*:388)|/edit(*:401)|(*:409))|/download\\-invoice/([^/]++)(*:445)|/update\\-stock/([^/]++)(*:476))/?$}sDu',
     ),
     3 => 
     array (
@@ -1454,7 +1510,95 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      399 => 
+      388 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'grn.show',
+          ),
+          1 => 
+          array (
+            0 => 'grn',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      401 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'grn.edit',
+          ),
+          1 => 
+          array (
+            0 => 'grn',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      409 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'grn.update',
+          ),
+          1 => 
+          array (
+            0 => 'grn',
+          ),
+          2 => 
+          array (
+            'PUT' => 0,
+            'PATCH' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'grn.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'grn',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      445 => 
       array (
         0 => 
         array (
@@ -1477,7 +1621,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      430 => 
+      476 => 
       array (
         0 => 
         array (
@@ -1514,7 +1658,7 @@ app('router')->setCompiledRoutes(
   ),
   'attributes' => 
   array (
-    'generated::l0jqgjPr314CFVYG' => 
+    'generated::0Icu62RXr27yW28z' => 
     array (
       'methods' => 
       array (
@@ -1535,7 +1679,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
         ),
-        'as' => 'generated::l0jqgjPr314CFVYG',
+        'as' => 'generated::0Icu62RXr27yW28z',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1660,7 +1804,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::e9zP1vWxxUkFuwK8' => 
+    'generated::5H3aw53ap86RRkcb' => 
     array (
       'methods' => 
       array (
@@ -1677,13 +1821,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:295:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000007e85490400000000709fb57c";}";s:4:"hash";s:44:"Af/g3bBjjt8/in11fX4pd4yBOIEJ8XgY6HuzA/hniEk=";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000001b10835000000004487e92f";}";s:4:"hash";s:44:"KDA2EENQfKKZy0EGRHTv5yCCMcgZHzo6pbVNdHm2zeg=";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::e9zP1vWxxUkFuwK8',
+        'as' => 'generated::5H3aw53ap86RRkcb',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1699,7 +1843,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::jJ27XRP2drXYrlQW' => 
+    'generated::tQAJcarzZkMKIZGh' => 
     array (
       'methods' => 
       array (
@@ -1715,13 +1859,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:265:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:47:"function () {
     return \\view(\'auth.login\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000007e8549fa00000000709fb57c";}";s:4:"hash";s:44:"6J4+O1B6Of5Y19znj9mGcmd75yCartNt3dY4Kgw6gCg=";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000001b10837000000004487e92f";}";s:4:"hash";s:44:"sWOdZMx95c0K0n/0hjOQ56VBzrgAOhmbez4jf3qGU/4=";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::jJ27XRP2drXYrlQW',
+        'as' => 'generated::tQAJcarzZkMKIZGh',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1774,7 +1918,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::egbA5yLEw31OS4B6' => 
+    'generated::MnwD1ZUuw1ufHf61' => 
     array (
       'methods' => 
       array (
@@ -1794,7 +1938,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::egbA5yLEw31OS4B6',
+        'as' => 'generated::MnwD1ZUuw1ufHf61',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1883,7 +2027,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Fsm3lYlxgv2YWrsD' => 
+    'generated::XKIpG065hk6n4nVg' => 
     array (
       'methods' => 
       array (
@@ -1903,7 +2047,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::Fsm3lYlxgv2YWrsD',
+        'as' => 'generated::XKIpG065hk6n4nVg',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2102,7 +2246,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::xoYo4xb0Ym8hFBQ5' => 
+    'generated::ful8P37VFkRWUrNn' => 
     array (
       'methods' => 
       array (
@@ -2122,7 +2266,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::xoYo4xb0Ym8hFBQ5',
+        'as' => 'generated::ful8P37VFkRWUrNn',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3697,6 +3841,263 @@ app('router')->setCompiledRoutes(
         'as' => 'reorder.destroy',
         'uses' => 'App\\Http\\Controllers\\ReOrderController@destroy',
         'controller' => 'App\\Http\\Controllers\\ReOrderController@destroy',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'grn.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'grn',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'grn.index',
+        'uses' => 'App\\Http\\Controllers\\GRNController@index',
+        'controller' => 'App\\Http\\Controllers\\GRNController@index',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'grn.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'grn/create',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'grn.create',
+        'uses' => 'App\\Http\\Controllers\\GRNController@create',
+        'controller' => 'App\\Http\\Controllers\\GRNController@create',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'grn.store' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'grn',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'grn.store',
+        'uses' => 'App\\Http\\Controllers\\GRNController@store',
+        'controller' => 'App\\Http\\Controllers\\GRNController@store',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'grn.show' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'grn/{grn}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'grn.show',
+        'uses' => 'App\\Http\\Controllers\\GRNController@show',
+        'controller' => 'App\\Http\\Controllers\\GRNController@show',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'grn.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'grn/{grn}/edit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'grn.edit',
+        'uses' => 'App\\Http\\Controllers\\GRNController@edit',
+        'controller' => 'App\\Http\\Controllers\\GRNController@edit',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'grn.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+        1 => 'PATCH',
+      ),
+      'uri' => 'grn/{grn}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'grn.update',
+        'uses' => 'App\\Http\\Controllers\\GRNController@update',
+        'controller' => 'App\\Http\\Controllers\\GRNController@update',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'grn.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'grn/{grn}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'as' => 'grn.destroy',
+        'uses' => 'App\\Http\\Controllers\\GRNController@destroy',
+        'controller' => 'App\\Http\\Controllers\\GRNController@destroy',
         'namespace' => NULL,
         'prefix' => '/',
         'where' => 
