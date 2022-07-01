@@ -84,9 +84,19 @@
                                     
 
                                 </table>
+                                
                             </div>
 
-                            
+                            <div ng-if="items.length>0"  class="col-md-6">
+                                <div class="form-group">
+                            <label class="mt-4">Notes</label>
+                
+                  
+                            <textarea class="form-control" type="text" 
+                            name="qualitative" value="1" ng-model="data.notes"
+                            ></textarea>
+                        </div>
+                        </div>
 
                         </div>
                     </div>

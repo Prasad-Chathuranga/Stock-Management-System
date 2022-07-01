@@ -256,9 +256,20 @@ app.controller('GRNController', ($scope, $http, Loader, $timeout) => {
 
 
     $scope.save = () => {
+        let itemsArray = [];
+        let total = 0;
+        itemsArray = $scope.items;
+
+        itemsArray.forEach(element => {
+            total = parseInt(total) + parseInt(element.grn_quantity);
+        });
+
 var data = {
-    items : $scope.items
+    items : $scope.items,
+    total : total
 }
+
+
         $http.post($scope.url, JSON.stringify(data))
             .then((response) => {
                 console.log(response);

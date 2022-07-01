@@ -208,6 +208,7 @@ class PaymentController extends Controller
         $payment->payment_no = $this->generatePaymentNumber();
         $payment->notes = $request->notes;
         $payment->amount = $request->settle;
+        $payment->method = 'Cash';
         $payment->due = $due - $settle; 
 
     

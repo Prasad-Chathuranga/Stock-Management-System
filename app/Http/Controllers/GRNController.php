@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\GRN;
 use App\Models\GRNItem;
 use App\Models\Item;
@@ -19,7 +20,8 @@ class GRNController extends Controller
     public function index()
     {
         //
-        return view('grn.index');
+        $grns = GRN::with('grn_items', 'grn_items.item')->get();
+        return view('grn.index', compact('grns'));
     }
 
     /**
@@ -67,47 +69,44 @@ class GRNController extends Controller
      
         $items = $request->items;
 
-        $total_items = 0;
+        $total_items = $request->total;
 
         $grn = new GRN();
         $grn->grn_no =  $this->generateGRNNumber();
-        // $grn->total = $total_items + $item['grn_quantity'];
         $grn->notes =  $request->notes;
-        $grn->createdBy = Auth::user()->id;
+        $grn->created_by = Auth::user()->id;
+        $grn->total = $total_items;
         $grn->save();
+      
 
         foreach ($items as $key => $item) {
 
-            $total_items = $total_items + $item['grn_quantity'];
-
             $stock_item = Item::findOrFail($item['id']);
-            $stock_item->stock =  intval($stock_item->stock) + intval($item->grn_quantity);
+            $stock_item->stock =  intval($stock_item->stock) + intval($item['grn_quantity']);
+             
+            $stock_item->save();
+          
 
-            $stock_category= Item::findOrFail($item['category_id']);
-            $stock_category->stock =  intval($stock_category->stock) + intval($item->grn_quantity);
+            $stock_category= Category::findOrFail($item['category_id']);
+            $stock_category->stock =  intval($stock_category->stock) + intval($item['grn_quantity']);
+            $stock_category->save();
 
-    
             $grn_item = new GRNItem();
             $grn_item->grn_id = $grn->id;
-            $grn_item->item_id = $grn->id;
-            $grn_item->category_id = $grn->id;
-            $grn_item->current_stock = $grn->id;
-            $grn_item->new_stock = $grn->id;
-
-
-            try {
-
-               $stock_item->save();
-               $stock_category->save();
-               $grn_item->save();
-              
-
-               DB::commit();
-
-            } catch (\Exception $th) {
-                throw $th;
-            }
+            $grn_item->item_id = $item['id'];
+            $grn_item->category_id = $item['category_id'];
+            $grn_item->current_stock = $item['stock'];
+            $grn_item->new_stock = $item['grn_quantity'];
+            $grn_item->save();
         }
+       
+        try {
+            DB::commit();
+            return response()->json(['message'=>'GRN Created !', 'url'=> route('grn.index')]);
+         } catch (\Exception $th) {
+             DB::rollBack();
+             return response()->json(['message'=>$th->getMessage(),'code'=>422]);
+         }
 
        
        

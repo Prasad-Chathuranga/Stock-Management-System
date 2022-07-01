@@ -156,7 +156,7 @@
               <td>@{{payment.amount | number : 2}}</td>
               <td>@{{payment.notes}}</td>
               <td>@{{payment.due | number : 2}}</td>
-              <td>@{{data.order_details.order.created_at}}</td>
+              <td>@{{payment.created_at | date:'dd-MM-yyyy h:mm:s a'}}</td>
             </tr>
           </tbody>
         </table>

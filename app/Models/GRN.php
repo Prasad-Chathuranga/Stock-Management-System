@@ -10,4 +10,9 @@ class GRN extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function grn_items()
+    {
+        return $this->hasMany(GRNItem::class, 'grn_id', 'id');
+    }
 }
